@@ -33,7 +33,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000")); // 허용할 도메인 패턴
+        configuration.setAllowedOriginPatterns(List.of("https://hrdjceqyzjwcabjc.tunnel-pt.elice.io")); // 허용할 도메인 패턴
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true); // 자격 증명 허용
