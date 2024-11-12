@@ -6,7 +6,6 @@ import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/files")
 @RequiredArgsConstructor
-@Slf4j
 public class FileController {
 
     @Autowired
