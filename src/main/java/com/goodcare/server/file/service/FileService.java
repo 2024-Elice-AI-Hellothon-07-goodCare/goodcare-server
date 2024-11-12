@@ -2,21 +2,35 @@ package com.goodcare.server.file.service;
 
 import com.goodcare.server.file.dao.FileDAO;
 import com.goodcare.server.file.repository.FileRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FileService {
 
     @Autowired
@@ -52,7 +66,10 @@ public class FileService {
 
         File destinationFile = new File(filePath);
         FileUtils.copyInputStreamToFile(file.getInputStream(), destinationFile);
-    
+        // 모든 사용자에게 읽기 권한 부여
+        // 이거 없으면 파일 다운로드 안됨!!
+        destinationFile.setReadable(true, false);
+
         // 추후 회원 정보 나온 후 DB 내 추가로 정보 저장 예정
         FileDAO fileDAO = new FileDAO();
         fileDAO.setFilePath(filePath);
@@ -62,4 +79,40 @@ public class FileService {
 
         return fileDAO;
     }
+
+    // 나중에 환자 코드 사용해서 파일 가져오는 것으로 바꾸기
+    public ResponseEntity<Resource> downloadFile(Long id) throws IOException {
+        FileDAO fileDAO = fileRepository.findById(id).orElseThrow(
+                () -> new FileNotFoundException("This member has no file" + id));
+
+        File file = new File(fileDAO.getFilePath());
+
+        if(!file.exists()){
+            throw new FileNotFoundException("파일을 찾을 수 없습니다.");
+        }
+
+        Resource resource = new FileSystemResource(file);
+        String contentType = Files.probeContentType(file.toPath());
+        long contentLength = file.length(); // 파일 크기 설정
+
+        // Content-Type을 지정, 기본값은 audio/mpeg
+        if (contentType == null || !contentType.startsWith("audio")) {
+            contentType = "audio/mpeg";
+        }
+
+        // HTTP 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        // 바로 스트리밍 하기를 원하면 헤더 밑에줄로 바꾸기
+//        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"");
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+        // ResponseEntity로 반환
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(contentLength)
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
+    }
+
 }
