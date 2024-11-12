@@ -30,14 +30,11 @@ public class FileController {
             summary = "파일 업로드 관련 테스트 api",
             description = "서버 내 저장소에 파일을 업로드합니다."
     )
-    public ApiResponse<?> fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
-        try{
+    public ApiResponse<?> fileUpload(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("name") String name
+    ) throws IOException {
             FileDAO savedFile = fileService.uploadFile(file, name);
             return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), savedFile);
-        }catch (Exception e){
-            log.atError();
-            return ApiResponse
-                    .onFailure(Status.INTERNAL_SERVER_ERROR.getCode(), e.toString(), null);
-        }
     }
 }

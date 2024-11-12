@@ -2,6 +2,7 @@ package com.goodcare.server.global.response;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,6 +24,12 @@ import java.util.Optional;
 @RestControllerAdvice(annotations = {RestController.class})
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    private final WebRequest webRequest;
+
+    public GlobalExceptionHandler(@Qualifier("webRequest") WebRequest webRequest) {
+        this.webRequest = webRequest;
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> unexpectedException(
             Exception unexpectedException,
@@ -110,4 +118,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<Object> handleIOException(
+            IOException exception,
+            HttpServletRequest request
+    ){
+        Body body = Status.UNSUPPORTED_MEDIA_TYPE.getBody();
+        ApiResponse<Object> response = ApiResponse.onFailure(body.getCode(), body.getMessage(), null);
+        log.warn(body.getMessage());
+
+        return super.handleExceptionInternal(
+                exception,
+                response,
+                HttpHeaders.EMPTY,
+                body.getHttpStatus(),
+                webRequest
+        );
+    }
 }

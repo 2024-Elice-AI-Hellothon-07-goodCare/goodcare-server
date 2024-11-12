@@ -18,9 +18,9 @@ public enum Status {
     CONFLICT(HttpStatus.CONFLICT, "COMMON409", "이미 생성되었습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON500", "서버에 오류가 발생했습니다."),
 
-    ANALYZED_FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "ANALYZED_FILE_404", "분석된 파일이 존재하지 않습니다."),
+    ANALYZED_FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "FILE_NOT_FOUND_404", "분석된 파일이 존재하지 않습니다."),
 
-    ;
+    UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "UNSUPPORTED_MEDIA_TYPE_415", "지원하지 않는 파일 형식입니다.");
 
     private final HttpStatus httpStatus;
 
