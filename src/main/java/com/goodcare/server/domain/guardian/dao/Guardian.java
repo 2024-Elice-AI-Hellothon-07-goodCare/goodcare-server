@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name="caregiver")
+@Table(name="guardian")
 public class Guardian {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
