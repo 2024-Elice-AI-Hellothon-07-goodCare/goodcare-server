@@ -58,5 +58,5 @@ jobs:
           sleep 2
           nohup java -jar /home/${{ secrets.SERVER_USER }}/app/server.jar > server.log 2>&1 &
           disown
-        command_timeout: 120
+        command_timeout: 120s
         debug: true
