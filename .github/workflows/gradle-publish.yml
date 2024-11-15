@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           source: build/libs/server-0.0.1-SNAPSHOT.jar # 정확한 JAR 파일 지정
-          target: /home/${{ secrets.SERVER_USER }}/app/build/libs
+          target: /home/${{ secrets.SERVER_USER }}/app/
           debug: true
 
       # 6. 서버에서 application.properties 파일 생성
@@ -70,8 +70,8 @@ jobs:
             echo "spring.servlet.multipart.max-request-size=10MB" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
             echo "api.elice.ml-api-key=${{ secrets.ML_API_KEY }}" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
 
-      # 7. 서버에서 Spring Boot 실행 (tmux 사용)
-      - name: Run Spring Boot on server using tmux
+      # 7. 서버에서 Spring Boot 애플리케이션 실행
+      - name: Run Spring Boot on server
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -79,11 +79,20 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            # tmux가 설치되어 있지 않으면 설치
-            if ! command -v tmux &> /dev/null; then
-              sudo apt update && sudo apt install -y tmux
-            fi
-            # tmux 세션에서 Spring Boot 실행
-            tmux new-session -d -s spring-boot "cd /home/${{ secrets.SERVER_USER }}/app/build/libs && java -jar server-0.0.1-SNAPSHOT.jar > /home/${{ secrets.SERVER_USER }}/app/server.log 2>&1"
+            cd /home/${{ secrets.SERVER_USER }}/app/build/libs
+            pkill -f 'java -jar' || true
+            sleep 2
+            nohup java -jar server-0.0.1-SNAPSHOT.jar > /home/${{ secrets.SERVER_USER }}/app/server.log 2>&1 &
           command_timeout: 300s
+          debug: true
+
+      # 8. Spring Boot 로그 확인 (선택 사항)
+      - name: Display Spring Boot log
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: 17596
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: tail -n 50 /home/${{ secrets.SERVER_USER }}/app/server.log
           debug: true
