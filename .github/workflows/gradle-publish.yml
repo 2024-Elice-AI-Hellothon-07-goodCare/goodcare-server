@@ -45,7 +45,32 @@ jobs:
           target: /home/${{ secrets.SERVER_USER }}/app/build/libs
           debug: true
 
-      # 6. 서버에서 Spring Boot 실행 (tmux 사용)
+      # 6. 서버에서 application.properties 파일 생성
+      - name: Create application.properties on server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: 17596
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            # application.properties 파일 생성
+            echo "spring.application.name=server" > /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "server.port=9090" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.datasource.url=${{ secrets.DB_URL }}" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.datasource.username=${{ secrets.DB_USERNAME }}" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.jpa.hibernate.ddl-auto=update" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.jpa.show-sql=true" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.jpa.properties.hibernate.format_sql=true" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.servlet.multipart.enabled=true" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.servlet.multipart.max-file-size=10MB" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "spring.servlet.multipart.max-request-size=10MB" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+            echo "api.elice.ml-api-key=${{ secrets.ML_API_KEY }}" >> /home/${{ secrets.SERVER_USER }}/app/build/libs/application.properties
+
+      # 7. 서버에서 Spring Boot 실행 (tmux 사용)
       - name: Run Spring Boot on server using tmux
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -54,29 +79,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            # 환경 변수를 직접 설정
-            export DB_URL=${{ secrets.DB_URL }}
-            export DB_USERNAME=${{ secrets.DB_USERNAME }}
-            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            export ML_API_KEY=${{ secrets.ML_API_KEY }}
-            
             # tmux가 설치되어 있지 않으면 설치
             if ! command -v tmux &> /dev/null; then
               sudo apt update && sudo apt install -y tmux
             fi
-            
             # tmux 세션에서 Spring Boot 실행
             tmux new-session -d -s spring-boot "cd /home/${{ secrets.SERVER_USER }}/app/build/libs && java -jar server-0.0.1-SNAPSHOT.jar > /home/${{ secrets.SERVER_USER }}/app/server.log 2>&1"
           command_timeout: 300s
-          debug: true
-
-      # 7. 서버에서 tmux 세션 확인 (선택 사항)
-      - name: Check tmux session
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: 17596
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          script: tmux ls
           debug: true
