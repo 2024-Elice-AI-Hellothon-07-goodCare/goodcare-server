@@ -50,9 +50,13 @@ jobs:
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_HOST }}
-        port: 17596 # SSH 포트 설정
+        port: 17596
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_KEY }}
         script: |
           pkill -f 'java -jar' || true
+          sleep 2
           nohup java -jar /home/${{ secrets.SERVER_USER }}/app/server.jar > server.log 2>&1 &
+          disown
+        command_timeout: 120
+        debug: true
