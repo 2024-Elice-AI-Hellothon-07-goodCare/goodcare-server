@@ -1,4 +1,4 @@
-# dispatch명령어 수행해야 action 수행됩니다!!
+# Dispatch 명령어를 통해 수동 실행
 name: Deploy Spring Boot to Ubuntu Server without Docker Container
 
 on:
@@ -38,16 +38,19 @@ jobs:
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_HOST }}
+        port: 17596 # SSH 포트 설정
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_KEY }}
         source: build/libs/*.jar
         target: /home/${{ secrets.SERVER_USER }}/app/server.jar
-
+        debug: true
+        
     # 6. 서버에서 Spring Boot 실행
     - name: Run Spring Boot on server
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.SERVER_HOST }}
+        port: 17596 # SSH 포트 설정
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_KEY }}
         script: |
