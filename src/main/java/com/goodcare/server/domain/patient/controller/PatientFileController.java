@@ -1,7 +1,8 @@
-package com.goodcare.server.domain.uploadedFile.controller;
+package com.goodcare.server.domain.patient.controller;
 
+import com.goodcare.server.domain.patient.dao.PatientFile;
+import com.goodcare.server.domain.patient.service.PatientFileService;
 import com.goodcare.server.domain.uploadedFile.dao.FileDAO;
-import com.goodcare.server.domain.uploadedFile.service.FileService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/patient/file")
 @AllArgsConstructor
-public class FileController {
-
-    private final FileService fileService;
+public class PatientFileController {
+    private final PatientFileService patientFileService;
 
     @PostMapping(value =  "/upload", consumes = "multipart/form-data")
     @Operation(
@@ -28,10 +30,10 @@ public class FileController {
     )
     public ApiResponse<?> fileUpload(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("name") String name
+            @RequestParam("code") String code
     ) throws IOException {
-            FileDAO savedFile = fileService.uploadFile(file, name);
-            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), savedFile);
+        PatientFile patientFile = patientFileService.uploadFile(file, code);
+        return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), patientFile);
     }
 
     @GetMapping(value =  "/download")
@@ -40,11 +42,11 @@ public class FileController {
             description = "파일 다운로드 url을 받아옵니다"
     )
     public ApiResponse<?> getFile(
-            @RequestParam("id") Long id // 추후 환자 코드로 변경하기
+            @RequestParam("code") String code // 추후 환자 코드로 변경하기
     ) throws IOException{
-        ResponseEntity<Resource> responseEntity = fileService.downloadFile(id);
+        ResponseEntity<Resource> responseEntity = patientFileService.downloadFile(code);
         // 실제 다운로드를 처리하는 URL
-        String downloadUrl = "/download/file?id=" + id;
+        String downloadUrl = "/download/file?code=" + code;
         Map<String, Object> responseBody = Map.of(
                 "downloadUrl", downloadUrl,
                 "fileName",  responseEntity.getHeaders().getContentDisposition().getFilename(),
@@ -61,7 +63,7 @@ public class FileController {
             summary = "파일 다운로드 api",
             description = "실제 파일을 다운로드 합니다."
     )
-    public ResponseEntity<Resource> downloadFile(@RequestParam("id") Long id) throws IOException {
-        return fileService.downloadFile(id);
+    public ResponseEntity<Resource> downloadFile(@RequestParam("code") String code) throws IOException {
+        return patientFileService.downloadFile(code);
     }
 }

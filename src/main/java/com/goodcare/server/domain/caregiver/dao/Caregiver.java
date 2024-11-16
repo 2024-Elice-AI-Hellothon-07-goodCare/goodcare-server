@@ -20,6 +20,9 @@ public class Caregiver {
     @Column(name="caregiver_code", nullable = false)
     private String code;
 
+    @Column(name="patient_code", nullable = false)
+    private String patientCode;
+
     private String name;
 
     @Column(name = "date_of_birth")

@@ -13,4 +13,5 @@ public class PatientRepositoryBundle {
     private final EmergencyContactRepository emergencyContactRepository;
     private final MedicalServiceNeedsRepository medicalServiceNeedsRepository;
     private final ResidentialInfoRepository residentialInfoRepository;
+    private final PatientFileRepository patientFileRepository;
 }

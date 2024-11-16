@@ -15,8 +15,11 @@ public class Guardian {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "guardian_code")
+    @Column(name = "guardian_code", nullable = false)
     private String code;
+
+    @Column(name="patient_code", nullable = false)
+    private String patientCode;
 
     private String name;
 

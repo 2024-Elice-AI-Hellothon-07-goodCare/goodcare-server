@@ -13,7 +13,7 @@ public class GuardianConsent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "guardian_code")
+    @Column(name = "guardian_code", nullable = false)
     private String code;
 
     @Column(name = "medical_care_access_consent")

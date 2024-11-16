@@ -13,7 +13,7 @@ public class GuardianContactPreference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "guardian_code")
+    @Column(name = "guardian_code", nullable = false)
     private String code;
 
     @Column(name = "preferred_contact_method")
