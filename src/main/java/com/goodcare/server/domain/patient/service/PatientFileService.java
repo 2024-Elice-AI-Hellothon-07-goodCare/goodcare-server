@@ -2,7 +2,7 @@ package com.goodcare.server.domain.patient.service;
 
 import com.goodcare.server.domain.patient.dao.PatientFile;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
-import com.goodcare.server.domain.uploadedFile.dao.FileDAO;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
@@ -24,6 +24,7 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class PatientFileService {
     private PatientRepositoryBundle patientRepositoryBundle;
 

@@ -41,6 +41,10 @@ dependencies {
 
 	// FIle Upload API
 	implementation 'commons-io:commons-io:2.17.0'
+
+	// clean json print
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
 }
 
 tasks.named('test') {

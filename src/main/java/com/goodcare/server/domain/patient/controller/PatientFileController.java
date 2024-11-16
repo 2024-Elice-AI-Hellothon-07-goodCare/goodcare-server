@@ -2,10 +2,10 @@ package com.goodcare.server.domain.patient.controller;
 
 import com.goodcare.server.domain.patient.dao.PatientFile;
 import com.goodcare.server.domain.patient.service.PatientFileService;
-import com.goodcare.server.domain.uploadedFile.dao.FileDAO;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Patient_file", description = "Patient 음성 파일 관련 API")
 @RestController
 @RequestMapping("/patient/file")
 @AllArgsConstructor
@@ -36,7 +35,7 @@ public class PatientFileController {
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), patientFile);
     }
 
-    @GetMapping(value =  "/download")
+    @GetMapping(value =  "/")
     @Operation(
             summary = "파일 다운로드 url api",
             description = "파일 다운로드 url을 받아옵니다"
@@ -58,7 +57,7 @@ public class PatientFileController {
     }
 
     // 실제 다운로드 처리
-    @GetMapping("/download/file")
+    @GetMapping("/download")
     @Operation(
             summary = "파일 다운로드 api",
             description = "실제 파일을 다운로드 합니다."

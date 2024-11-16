@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,10 +21,10 @@ public class SwaggerConfig {
                 .description("2024 AI 헬로톤 Team-07 API docs입니다.")
                 .version("1.0.0");
 
-        Server servers = new Server().url("/");
+        Server server = new Server().url("/");
 
         return new OpenAPI()
-                .servers(List.of(servers))
+                .servers(List.of(server))
                 .info(info);
     }
 }
