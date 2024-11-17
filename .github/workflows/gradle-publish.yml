@@ -17,6 +17,8 @@ jobs:
       # 1. 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: api # api 브랜치를 체크아웃
 
       # 2. JDK 설치
       - name: Set up JDK 21
