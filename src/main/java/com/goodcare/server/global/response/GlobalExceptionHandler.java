@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -135,5 +136,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 body.getHttpStatus(),
                 webRequest
         );
+    }
+
+    @ExceptionHandler(HttpMessageConversionException.class)
+    public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException ex) {
+        Throwable cause = ex.getCause();
+        log.error("역직렬화 오류: {}", cause != null ? cause.getMessage() : "원인 알 수 없음", ex);
+        return ResponseEntity.badRequest().body("입력 데이터가 DTO 구조와 일치하지 않습니다.");
     }
 }

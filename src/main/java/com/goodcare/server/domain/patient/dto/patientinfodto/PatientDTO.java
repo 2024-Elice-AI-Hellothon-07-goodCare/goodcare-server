@@ -1,7 +1,8 @@
-package com.goodcare.server.domain.patient.dto;
+package com.goodcare.server.domain.patient.dto.patientinfodto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PatientDTO {
     private String name;
     private LocalDate dateOfBirth;
