@@ -8,17 +8,21 @@ on:
         description: "Deployment environment (e.g., staging, production)"
         required: true
         default: "production"
+      branch:
+        description: "Branch to deploy (e.g., develop, main)"
+        required: true
+        default: "develop" # 기본값으로 develop 브랜치 설정
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 코드 체크아웃
+      # 1. 코드 체크아웃 (입력된 브랜치를 체크아웃)
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: develop # api 브랜치를 체크아웃
+          ref: ${{ github.event.inputs.branch }} # 입력된 브랜치로 체크아웃
 
       # 2. JDK 설치
       - name: Set up JDK 21
