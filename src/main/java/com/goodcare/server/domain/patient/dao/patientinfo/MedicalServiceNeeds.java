@@ -13,8 +13,8 @@ public class MedicalServiceNeeds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "patinet_code", nullable = false)
-    private String patinetCode;
+    @Column(name = "patient_code", nullable = false)
+    private String patientCode;
 
     @Column(name = "regular_checkups")
     private Boolean regularCheckups;
