@@ -1,6 +1,6 @@
 package com.goodcare.server.domain.patient.controller;
 
-import com.goodcare.server.domain.patient.dao.PatientFile;
+import com.goodcare.server.domain.patient.dao.patientinfo.PatientFile;
 import com.goodcare.server.domain.patient.service.PatientFileService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;

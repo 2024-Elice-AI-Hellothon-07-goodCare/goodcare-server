@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.patient.dao;
+package com.goodcare.server.domain.patient.dao.patientinfo;
 
 import jakarta.persistence.*;
 import lombok.Getter;

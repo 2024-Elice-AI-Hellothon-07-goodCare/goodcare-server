@@ -1,19 +1,23 @@
 package com.goodcare.server.domain.patient.service;
 
 import com.goodcare.server.domain.patient.dao.*;
+import com.goodcare.server.domain.patient.dao.patientinfo.*;
 import com.goodcare.server.domain.patient.dto.PatientInfoDTO;
-import com.goodcare.server.domain.patient.dto.patientinfodto.EmergencyContactDTO;
-import com.goodcare.server.domain.patient.dto.patientinfodto.HealthInfoDTO;
-import com.goodcare.server.domain.patient.dto.patientinfodto.PatientDTO;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AlternativeJdkIdGenerator;
+import org.webjars.NotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class PatientInfoService {
     private final PatientRepositoryBundle patientRepositoryBundle;
 
@@ -44,7 +48,7 @@ public class PatientInfoService {
 
         // 의료 정보
         MedicalServiceNeeds medicalServiceNeeds = new MedicalServiceNeeds();
-        medicalServiceNeeds.setPatinetCode(patientCode);
+        medicalServiceNeeds.setPatientCode(patientCode);
         medicalServiceNeeds.setTreatments(patientInfoDTO.getMedicalServiceNeedsDTO().getTreatments());
         medicalServiceNeeds.setSpecialNursing(patientInfoDTO.getMedicalServiceNeedsDTO().getSpecialNursing());
         medicalServiceNeeds.setRegularCheckups(patientInfoDTO.getMedicalServiceNeedsDTO().getRegularCheckups());
@@ -69,5 +73,41 @@ public class PatientInfoService {
         patientRepositoryBundle.getResidentialInfoRepository().save(residentialInfo);
 
         return "success";
+    }
+
+    public PatientDAOBundle searchPatientByCode(String code){
+        Patient patient  = patientRepositoryBundle.getPatientRepository().findByCode(code)
+                .orElseThrow(() -> new NotFoundException("환자 정보를 찾을 수 없습니다 - 환자 코드 : " + code));
+
+        return patientDAOBundleBuild(patient);
+    }
+
+    public List<PatientDAOBundle> searchPatientsByName(String name){
+        List<PatientDAOBundle> patientDAOBundles = new ArrayList<>();
+
+        List<Patient> patientList = patientRepositoryBundle.getPatientRepository().findPatientsByName(name);
+        log.debug("환자 " + patientList.size() + "건 발견!");
+        for(int i = 0; i < patientList.size(); i++) {
+            Patient patient = patientList.get(i);
+            patientDAOBundles.add(patientDAOBundleBuild(patient));
+        }
+
+        return patientDAOBundles;
+    }
+    
+    // 번들 만드는 코드
+    private PatientDAOBundle patientDAOBundleBuild(Patient patient){
+        String patientCode = patient.getCode();
+
+        EmergencyContact emergencyContact = patientRepositoryBundle.getEmergencyContactRepository()
+                .findEmergencyContactByPatientCode(patientCode).orElse(null);
+        HealthInfo healthInfo = patientRepositoryBundle.getHealthInfoRepository()
+                .findHealthInfoByPatientCode(patientCode).orElse(null);
+        MedicalServiceNeeds medicalServiceNeeds = patientRepositoryBundle.getMedicalServiceNeedsRepository()
+                .findMedicalServiceNeedsByPatientCode(patientCode).orElse(null);
+        ResidentialInfo residentialInfo = patientRepositoryBundle.getResidentialInfoRepository()
+                .findResidentialInfoByPatientCode(patientCode).orElse(null);
+
+        return new PatientDAOBundle(patient, emergencyContact, healthInfo, medicalServiceNeeds, residentialInfo);
     }
 }
