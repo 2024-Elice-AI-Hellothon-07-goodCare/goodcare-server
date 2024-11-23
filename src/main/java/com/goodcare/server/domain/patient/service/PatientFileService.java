@@ -134,13 +134,8 @@ public class PatientFileService {
         }
 
         Resource resource = new FileSystemResource(file);
-        String contentType = Files.probeContentType(file.toPath());
+        String contentType = "audio/wav";
         long contentLength = file.length(); // 파일 크기 설정
-
-        // Content-Type을 지정, 기본값은 audio/mpeg
-        if (contentType == null || !contentType.startsWith("audio")) {
-            contentType = "audio/wav";
-        }
 
         // HTTP 헤더 설정
         HttpHeaders headers = new HttpHeaders();
