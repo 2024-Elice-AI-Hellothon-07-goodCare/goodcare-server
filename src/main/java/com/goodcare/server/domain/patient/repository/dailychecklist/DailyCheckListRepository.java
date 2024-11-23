@@ -16,4 +16,6 @@ public interface DailyCheckListRepository extends JpaRepository<DailyCheckList, 
             @Param("today") LocalDate date,
             @Param("code") String code
     );
+
+
 }

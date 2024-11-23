@@ -1,5 +1,6 @@
 package com.goodcare.server.domain.patient.service;
 
+import com.goodcare.server.domain.patient.dao.DailyCheckListBundle;
 import com.goodcare.server.domain.patient.dao.dailychecklist.*;
 import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
@@ -95,8 +96,72 @@ public class PatientDailyCheckListService {
     public VitalSignsDTO getVitalSignsDTO(String code){
         VitalSignsDTO vitalSignsDTO = new VitalSignsDTO();
 
+        DailyCheckList dailyCheckList = patientRepositoryBundle.getDailyCheckListRepository()
+                .findDailyCheckListByTodayAndPatientCode(LocalDate.now(), code)
+                .orElse(null);
 
+        if(dailyCheckList == null){
+            return null;
+        }
+
+        String checkListCode = dailyCheckList.getCode();
+
+        VitalSigns vitalSigns = patientRepositoryBundle.getVitalSignsRepository()
+                .findVitalSignsByCheckListCode(checkListCode)
+                .orElse(null);
+
+        if(vitalSigns == null){
+            return null;
+        }
+
+        vitalSignsDTO.setTemperature(vitalSigns.getTemperature());
+        vitalSignsDTO.setBloodPressureSys(vitalSigns.getBloodPressureSys());
+        vitalSignsDTO.setBloodPressureDia(vitalSigns.getBloodPressureDia());
+        vitalSignsDTO.setPulse(vitalSigns.getPulse());
+        vitalSignsDTO.setOxygen(vitalSigns.getOxygen());
+        vitalSignsDTO.setRespirationRate(vitalSigns.getRespirationRate());
 
         return vitalSignsDTO;
+    }
+
+    public DailyCheckListBundle getDateDailyCheckListBundle(LocalDate date, String code) {
+        DailyCheckList dailyCheckList = patientRepositoryBundle.getDailyCheckListRepository()
+                .findDailyCheckListByTodayAndPatientCode(date, code)
+                .orElse(null);
+
+        if(dailyCheckList == null){
+            return null;
+        }
+
+        String checkListCode = dailyCheckList.getCode();
+
+        VitalSigns vitalSigns = patientRepositoryBundle.getVitalSignsRepository()
+                .findVitalSignsByCheckListCode(checkListCode)
+                .orElse(null);
+
+        Consciousness consciousness = patientRepositoryBundle.getConsciousnessRepository()
+                .findByCheckListCode(checkListCode)
+                .orElse(null);
+
+        Medications medications = patientRepositoryBundle.getMedicationsRepository()
+                .findByCheckListCode(checkListCode).orElse(null);
+
+        PhysicalStatus physicalStatus = patientRepositoryBundle.getPhysicalStatusRepository()
+                .findByCheckListCode(checkListCode)
+                .orElse(null);
+
+        SpecialNotes specialNotes = patientRepositoryBundle.getSpecialNotesRepository()
+                .findByCheckListCode(checkListCode)
+                .orElse(null);
+
+        DailyCheckListBundle dailyCheckListBundle = new DailyCheckListBundle();
+        dailyCheckListBundle.setDailyCheckList(dailyCheckList);
+        dailyCheckListBundle.setVitalSigns(vitalSigns);
+        dailyCheckListBundle.setConsciousness(consciousness);
+        dailyCheckListBundle.setMedications(medications);
+        dailyCheckListBundle.setPhysicalStatus(physicalStatus);
+        dailyCheckListBundle.setSpecialNotes(specialNotes);
+
+        return dailyCheckListBundle;
     }
 }

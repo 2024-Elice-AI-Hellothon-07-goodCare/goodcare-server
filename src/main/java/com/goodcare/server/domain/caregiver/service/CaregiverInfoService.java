@@ -87,4 +87,20 @@ public class CaregiverInfoService {
 
         return true;
     }
+    public String getPatientNameByCaregiverCode(String code){
+        Caregiver caregiver = caregiverRepositoryBundle.getCaregiverRepository()
+                .findCaregiverByCode(code).orElse(null);
+        if(caregiver == null){
+            return null;
+        }
+
+        Patient patient = patientRepositoryBundle.getPatientRepository()
+                .findByCode(caregiver.getPatientCode()).orElse(null);
+
+        if(patient == null){
+            return null;
+        }
+
+        return patient.getName();
+    }
 }

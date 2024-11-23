@@ -8,10 +8,7 @@ import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/caregiver/info")
@@ -34,5 +31,19 @@ public class CaregiverInfoController {
             return ApiResponse.onFailure(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), false);
         else
             return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), true);
+    }
+
+    @GetMapping("/get/patient-name")
+    @Operation(
+            summary = "환자 이름을 얻어옵니다",
+            description = "간병인 코드를 이용해 환자 이름을 얻어옵니다."
+    )
+    public ApiResponse<?> getPatientName(String code){
+        String name = caregiverInfoService.getPatientNameByCaregiverCode(code);
+        if(name == null){
+            return ApiResponse.onSuccess(Status.ANALYZED_FILE_NOT_FOUND.getCode(), Status.ANALYZED_FILE_NOT_FOUND.getMessage(), null);
+        }else{
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), name);
+        }
     }
 }
