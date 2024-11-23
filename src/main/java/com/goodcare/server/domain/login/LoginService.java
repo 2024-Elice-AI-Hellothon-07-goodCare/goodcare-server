@@ -7,6 +7,8 @@ import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 
 @Service
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class LoginService {
     private final PatientRepositoryBundle  patientRepositoryBundle;
     private final CaregiverRepositoryBundle caregiverRepositoryBundle;
 
-    public Boolean login(LoginDTO loginDTO) {
+    public LoginResult login(LoginDTO loginDTO) {
         String userType = loginDTO.getUserType();
         String code = loginDTO.getCode();
         String name = loginDTO.getName();
@@ -22,20 +24,32 @@ public class LoginService {
             case "환자" -> {
                 Patient patient = patientRepositoryBundle.getPatientRepository()
                         .findPatientByCodeAndName(code, name).orElse(null);
-
-                return patient != null;
+                LoginResult loginResult = new LoginResult();
+                if(patient != null) {
+                    loginResult.object = patient;
+                    loginResult.success = true;
+                }else{
+                    loginResult.object = null;
+                    loginResult.success = false;
+                }
+                return loginResult;
             }
             case "간병인" -> {
-                Caregiver Caregiver = caregiverRepositoryBundle.getCaregiverRepository()
+                Caregiver caregiver = caregiverRepositoryBundle.getCaregiverRepository()
                         .findCaregiverByCodeAndName(code, name).orElse(null);
-
-                return Caregiver != null;
+                LoginResult loginResult = new LoginResult();
+                if(caregiver != null) {
+                    loginResult.object = caregiver;
+                    loginResult.success = true;
+                }else{
+                    loginResult.object = null;
+                    loginResult.success = false;
+                }
+                return loginResult;
             }
             case "보호자" -> {
             }
         }
-
-
-        return false;
+        return null;
     }
 }

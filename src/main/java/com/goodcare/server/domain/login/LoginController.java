@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/login")
 @AllArgsConstructor
@@ -23,8 +25,11 @@ public class LoginController {
     public ApiResponse<?> doLogin(
             @RequestBody LoginDTO loginDTO
     ){
-        return loginService.login(loginDTO) ?
-                ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), true) :
-                ApiResponse.onFailure(Status.INTERNAL_SERVER_ERROR.getCode(), Status.INTERNAL_SERVER_ERROR.getMessage(), false);
+        LoginResult result = loginService.login(loginDTO);
+        if(result.success){
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
+        }else{
+            return ApiResponse.onSuccess(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), result);
+        }
     }
 }

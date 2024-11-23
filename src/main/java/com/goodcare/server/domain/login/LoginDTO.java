@@ -14,3 +14,12 @@ public class LoginDTO {
     private String code;
     private String name;
 }
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+class LoginResult{
+    Object object;
+    Boolean success;
+}
