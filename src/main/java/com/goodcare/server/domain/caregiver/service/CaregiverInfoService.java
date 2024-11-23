@@ -49,14 +49,14 @@ public class CaregiverInfoService {
         Caregiver caregiver = caregiverRepositoryBundle.getCaregiverRepository()
                 .findCaregiverByCode(code).orElse(null);
         if(caregiver == null){
-            return null;
+            return "간병인 정보가 없습니다.";
         }
 
         Patient patient = patientRepositoryBundle.getPatientRepository()
                 .findByCode(caregiver.getPatientCode()).orElse(null);
 
         if(patient == null){
-            return null;
+            return "환자 정보가 없습니다.";
         }
 
         return patient.getName();

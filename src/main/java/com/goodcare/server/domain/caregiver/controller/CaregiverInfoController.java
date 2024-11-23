@@ -39,10 +39,6 @@ public class CaregiverInfoController {
     )
     public ApiResponse<?> getPatientName(String code){
         String name = caregiverInfoService.getPatientNameByCaregiverCode(code);
-        if(name == null){
-            return ApiResponse.onSuccess(Status.ANALYZED_FILE_NOT_FOUND.getCode(), Status.ANALYZED_FILE_NOT_FOUND.getMessage(), null);
-        }else{
-            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), name);
-        }
+        return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), name);
     }
 }
