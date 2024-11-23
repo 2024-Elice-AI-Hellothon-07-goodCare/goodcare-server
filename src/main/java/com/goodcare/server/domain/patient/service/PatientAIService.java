@@ -2,14 +2,11 @@ package com.goodcare.server.domain.patient.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goodcare.server.domain.patient.dao.Patient;
-import com.goodcare.server.domain.patient.dao.PatientFile;
+import com.goodcare.server.domain.patient.dao.patientinfo.PatientFile;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AlternativeJdkIdGenerator;
 
@@ -21,9 +18,6 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.UUID;
 
 @Service

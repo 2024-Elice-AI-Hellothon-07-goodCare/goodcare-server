@@ -13,8 +13,8 @@ public class SpecialNotes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="checkllist_id", nullable = false)
-    private Long checkListId;
+    @Column(name="checkllist_code", nullable = false)
+    private String checkListCode;
 
     @Column(name="special_notes", columnDefinition = "TEXT")
     private String specialNotes;

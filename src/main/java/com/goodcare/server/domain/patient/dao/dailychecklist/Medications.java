@@ -13,11 +13,11 @@ public class Medications {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="checkllist_id", nullable = false)
-    private Long checkListId;
+    @Column(name="checkllist_code", nullable = false)
+    private String checkListCode;
 
     @Column(name="medication_taken", nullable = false)
-    private boolean medicationTaken;
+    private Boolean medicationTaken;
 
     @Column(name="side_effects")
     private String sideEffects;
