@@ -70,7 +70,6 @@ public class PatientDailyCheckListService {
         physicalStatus.setCheckListCode(dailyCheckListCode);
         physicalStatus.setSkinCondition(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getSkinCondition());
         physicalStatus.setPainLevel(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getPainLevel());
-        physicalStatus.setPainLocation(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getPainLocation());
         physicalStatus.setMobility(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getMobility());
 
         Medications medications = new Medications();
@@ -81,7 +80,6 @@ public class PatientDailyCheckListService {
         SpecialNotes specialNotes = new SpecialNotes();
         specialNotes.setCheckListCode(dailyCheckListCode);
         specialNotes.setSpecialNotes(patientDailyCheckListDTOBundle.getSpecialNotesDTO().getSpecialNotes());
-        specialNotes.setCaregiverNotes(patientDailyCheckListDTOBundle.getSpecialNotesDTO().getCaregiverNotes());
 
         patientRepositoryBundle.getDailyCheckListRepository().save(dailyCheckList);
         patientRepositoryBundle.getVitalSignsRepository().save(vitalSigns);

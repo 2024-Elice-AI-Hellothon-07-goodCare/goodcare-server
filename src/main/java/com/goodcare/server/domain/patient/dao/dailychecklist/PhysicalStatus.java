@@ -25,8 +25,6 @@ public class PhysicalStatus {
     @Column(name = "pain_level", nullable=false)
     private PainLevel painLevel;
 
-    @Column(name = "pain_location")
-    private String painLocation;
 
     @Column(name="mobility", nullable = false)
     private Mobility mobility;

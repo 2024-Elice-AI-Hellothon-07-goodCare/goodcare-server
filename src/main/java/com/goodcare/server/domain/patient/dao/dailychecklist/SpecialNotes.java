@@ -19,6 +19,4 @@ public class SpecialNotes {
     @Column(name="special_notes", columnDefinition = "TEXT")
     private String specialNotes;
 
-    @Column(name="caregiver_notes", columnDefinition = "TEXT")
-    private String caregiverNotes;
 }

@@ -15,6 +15,5 @@ import lombok.Setter;
 public class PhysicalStatusDTO {
     private SkinCondition skinCondition;
     private PainLevel painLevel;
-    private String painLocation;
     private Mobility mobility;
 }

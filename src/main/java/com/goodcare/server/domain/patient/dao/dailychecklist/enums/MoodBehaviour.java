@@ -11,5 +11,5 @@ public enum MoodBehaviour {
     DEPRESSION("우울감"),
     EXCITEMENT_OVERCROWD("흥분 과민");
 
-    private String moodBehaviour;
+    private final String moodBehaviour;
 }

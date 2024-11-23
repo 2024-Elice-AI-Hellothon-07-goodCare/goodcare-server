@@ -11,5 +11,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SpecialNotesDTO {
     private String specialNotes;
-    private String caregiverNotes;
 }
