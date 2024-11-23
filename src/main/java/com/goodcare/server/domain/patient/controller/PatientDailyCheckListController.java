@@ -2,6 +2,7 @@ package com.goodcare.server.domain.patient.controller;
 
 import com.goodcare.server.domain.patient.dao.DailyCheckListBundle;
 import com.goodcare.server.domain.patient.dao.dailychecklist.DailyCheckList;
+import com.goodcare.server.domain.patient.dao.dailychecklist.VitalSigns;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
 import com.goodcare.server.domain.patient.dto.dailychecklistdto.VitalSignsDTO;
 import com.goodcare.server.domain.patient.service.PatientAIService;
@@ -80,14 +81,18 @@ public class PatientDailyCheckListController {
             description = "환자의 특정 날짜 체크리스트를 참고하여 건강 수치를 반환합니다."
     )
     public ApiResponse<?> getVitalSigns(
+            @RequestParam("date") LocalDate date,
             @RequestParam("code") String code
     ){
-        VitalSignsDTO vitalSignsDTO = patientDailyCheckListService.getVitalSignsDTO(code);
-        if(vitalSignsDTO == null){
+        DailyCheckListBundle dailyCheckListBundle = patientDailyCheckListService
+                .getDateDailyCheckListBundle(date, code);
+
+        VitalSigns vitalSigns = dailyCheckListBundle.getVitalSigns();
+        if(vitalSigns == null){
             return ApiResponse.onFailure(Status.ANALYZED_FILE_NOT_FOUND.getCode(),
                     Status.ANALYZED_FILE_NOT_FOUND.getMessage(), null);
         }else{
-            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), vitalSignsDTO);
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), vitalSigns);
         }
     }
 
