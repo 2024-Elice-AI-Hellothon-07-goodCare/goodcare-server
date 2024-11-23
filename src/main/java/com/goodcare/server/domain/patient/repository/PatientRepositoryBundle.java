@@ -18,4 +18,5 @@ public class PatientRepositoryBundle {
     private final PhysicalStatusRepository physicalStatusRepository;
     private final SpecialNotesRepository specialNotesRepository;
     private final VitalSignsRepository vitalSignsRepository;
+    private final InterSpeechFileRepository interSpeechFileRepository;
 }

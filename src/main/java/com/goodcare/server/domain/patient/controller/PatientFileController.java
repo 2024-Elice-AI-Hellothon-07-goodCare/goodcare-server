@@ -65,4 +65,35 @@ public class PatientFileController {
     public ResponseEntity<Resource> downloadFile(@RequestParam("code") String code) throws IOException {
         return patientFileService.downloadFile(code);
     }
+
+    // 실제 다운로드 처리
+    @GetMapping("/inter-speech/download")
+    @Operation(
+            summary = "interspeech 파일 다운로드 api",
+            description = "실제 파일을 다운로드 합니다."
+    )
+    public ResponseEntity<Resource> getInterSpeechFile(@RequestParam("code") String code) throws IOException {
+        return patientFileService.downloadInterSpeechFile(code);
+    }
+
+    @GetMapping(value =  "/inter-speech")
+    @Operation(
+            summary = "inter-speech 파일 다운로드 url api",
+            description = "inter-speech 파일 다운로드 url을 받아옵니다"
+    )
+    public ApiResponse<?> getInterSpeechFileUrl(
+            @RequestParam("code") String code // 추후 환자 코드로 변경하기
+    ) throws IOException{
+        ResponseEntity<Resource> responseEntity = patientFileService.downloadInterSpeechFile(code);
+        // 실제 다운로드를 처리하는 URL
+        String downloadUrl = "/download/file?code=" + code;
+        Map<String, Object> responseBody = Map.of(
+                "downloadUrl", downloadUrl,
+                "fileName",  responseEntity.getHeaders().getContentDisposition().getFilename(),
+                "contentLength", responseEntity.getHeaders().getContentLength(),
+                "contentType", responseEntity.getHeaders().getContentType()
+        );
+
+        return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), responseBody);
+    }
 }

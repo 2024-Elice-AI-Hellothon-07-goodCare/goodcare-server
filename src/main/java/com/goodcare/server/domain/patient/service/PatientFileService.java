@@ -1,5 +1,6 @@
 package com.goodcare.server.domain.patient.service;
 
+import com.goodcare.server.domain.patient.dao.patientinfo.InterSpeechFile;
 import com.goodcare.server.domain.patient.dao.patientinfo.PatientFile;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import jakarta.transaction.Transactional;
@@ -119,5 +120,57 @@ public class PatientFileService {
                 .contentLength(contentLength)
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
+    }
+    // 나중에 환자 코드 사용해서 파일 가져오는 것으로 바꾸기
+    public ResponseEntity<Resource> downloadInterSpeechFile(String code) throws IOException {
+        InterSpeechFile interSpeechFile = patientRepositoryBundle.getInterSpeechFileRepository()
+                .findInterSpeechFileByCode(code).orElseThrow(
+                        () -> new FileNotFoundException("This member has no file" + code));
+
+        File file = new File(interSpeechFile.getInterSpeechFilePath());
+
+        if(!file.exists()){
+            throw new FileNotFoundException("파일을 찾을 수 없습니다.");
+        }
+
+        Resource resource = new FileSystemResource(file);
+        String contentType = Files.probeContentType(file.toPath());
+        long contentLength = file.length(); // 파일 크기 설정
+
+        // Content-Type을 지정, 기본값은 audio/mpeg
+        if (contentType == null || !contentType.startsWith("audio")) {
+            contentType = "audio/wav";
+        }
+
+        // HTTP 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        // 바로 스트리밍 하기를 원하면 헤더 밑에줄로 바꾸기
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"");
+//        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"");
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+        // ResponseEntity로 반환
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(contentLength)
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
+    }
+
+    public Boolean inputInterSpeech(String filePath, String fileName, String code, String text){
+        InterSpeechFile interSpeechFile = new InterSpeechFile();
+        interSpeechFile.setInterSpeechFilePath(filePath);
+        interSpeechFile.setInterSpeechFileName(fileName);
+        interSpeechFile.setCode(code);
+        interSpeechFile.setInputText(text);
+        patientRepositoryBundle.getInterSpeechFileRepository()
+                .save(interSpeechFile);
+
+        return true;
+    }
+
+    public List<InterSpeechFile> getIntraSpeechList(String code) {
+        return patientRepositoryBundle.getInterSpeechFileRepository()
+                .findInterSpeechFilesByCode(code);
     }
 }
