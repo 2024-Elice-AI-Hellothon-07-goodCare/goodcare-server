@@ -23,6 +23,14 @@ public interface DailyCheckListRepository extends JpaRepository<DailyCheckList, 
     public int updateDailyCheckListByAnalysisData(@Param("data") String data, @Param("code") String code);
 
     @Modifying
-    @Query("update DailyCheckList d set d.analysisWord = :data where d.code = :code")
-    public int updateDailyCheckListByAnalysisWord(@Param("data") String data, @Param("code") String code);
+    @Query("update DailyCheckList d " +
+            "set d.analysisData = CASE WHEN :analysisData IS NOT NULL THEN :analysisData ELSE d.analysisData END, " +
+            "    d.analysisWord = CASE WHEN :analysisWord IS NOT NULL THEN :analysisWord ELSE d.analysisWord END, " +
+            "    d.analysisFullData = CASE WHEN :analysisFullData IS NOT NULL THEN :analysisFullData ELSE d.analysisFullData END " +
+            "where d.code = :code")
+    public int updateDailyCheckList(@Param("analysisData") String analysisData,
+                                    @Param("analysisWord") String analysisWord,
+                                    @Param("analysisFullData") String analysisFullData,
+                                    @Param("code") String code);
+
 }

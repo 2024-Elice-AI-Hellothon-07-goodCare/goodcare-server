@@ -177,20 +177,8 @@ public class PatientDailyCheckListService {
     @Transactional
     public int setAnalysisData(DailyCheckList dailyCheckList) {
         String data = dailyCheckList.getAnalysisData();
-        String code = dailyCheckList.getCode();
-
-        // 유효성 검사
-        if (data == null || code == null) {
-            throw new IllegalArgumentException("Analysis data and code must not be null");
-        }
-
-        return patientRepositoryBundle.getDailyCheckListRepository()
-                .updateDailyCheckListByAnalysisData(data, code);
-    }
-
-    @Transactional
-    public int setAnalysisWord(DailyCheckList dailyCheckList) {
-        String data = dailyCheckList.getAnalysisWord();
+        String word = dailyCheckList.getAnalysisWord();
+        String fullData = dailyCheckList.getAnalysisFullData();
         String code = dailyCheckList.getCode();
 
         // 유효성 검사
@@ -199,6 +187,6 @@ public class PatientDailyCheckListService {
         }
 
         return patientRepositoryBundle.getDailyCheckListRepository()
-                .updateDailyCheckListByAnalysisWord(data, code);
+                .updateDailyCheckList(data, word, fullData, code);
     }
 }

@@ -31,6 +31,9 @@ public class DailyCheckList {
     @Column(name = "analysis_word")
     private String analysisWord;
 
+    @Column(name = "analysis_full_data", columnDefinition = "TEXT")
+    private String analysisFullData;
+
     @Override
     public String toString() {
         return "DailyCheckList{" +

@@ -119,7 +119,13 @@ public class PatientDailyCheckListController {
                         "이 3단어 중 1단어만 뽑아서 보여줘. 다른 말 붙이지 말고 저 단어 1개만."
         );
 
-        String[] listData = {analysisData, statusData};
+        String analysisFullData = patientAIService.getChat(
+                dailyCheckListString +
+                        "이 환자의 건강상태 확인표를 보고 환자의 건강 상태를 3문장으로 말해줘." +
+                        "그리고 각 문장은 개행문자로 구분해줘."
+        );
+
+        String[] listData = {analysisData, statusData, analysisFullData};
 
         DailyCheckListBundle bundle = patientDailyCheckListService.
                 getDateDailyCheckListBundle(date, code);
@@ -127,10 +133,10 @@ public class PatientDailyCheckListController {
         DailyCheckList dailyCheckList = bundle.getDailyCheckList();
         dailyCheckList.setAnalysisData(analysisData);
         dailyCheckList.setAnalysisWord(statusData);
+        dailyCheckList.setAnalysisFullData(analysisFullData);
 
         int dataUpdated = patientDailyCheckListService.setAnalysisData(dailyCheckList);
-        int wordUpdated = patientDailyCheckListService.setAnalysisWord(dailyCheckList);
-        if (dataUpdated > 0 && wordUpdated > 0) {
+        if (dataUpdated > 0) {
             return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), listData);
         } else {
             return ApiResponse.onFailure(Status.INTERNAL_SERVER_ERROR.getCode(),
