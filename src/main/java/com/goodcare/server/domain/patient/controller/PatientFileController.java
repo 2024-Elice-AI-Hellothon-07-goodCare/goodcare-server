@@ -72,8 +72,8 @@ public class PatientFileController {
             summary = "interspeech 파일 다운로드 api",
             description = "실제 파일을 다운로드 합니다."
     )
-    public ResponseEntity<Resource> getInterSpeechFile(@RequestParam("code") String code) throws IOException {
-        return patientFileService.downloadInterSpeechFile(code);
+    public ResponseEntity<Resource> getInterSpeechFile(@RequestParam("filename") String filename) throws IOException {
+        return patientFileService.downloadInterSpeechFile(filename);
     }
 
     @GetMapping(value =  "/inter-speech")

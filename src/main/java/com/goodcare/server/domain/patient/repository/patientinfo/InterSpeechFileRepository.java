@@ -15,4 +15,6 @@ public interface InterSpeechFileRepository extends JpaRepository<InterSpeechFile
 
     @Query("select i from InterSpeechFile i where i.code =:code")
     public List<InterSpeechFile> findInterSpeechFilesByCode(@Param("code") String code);
+
+    public Optional<InterSpeechFile> findInterSpeechFileByInterSpeechFileName(String filename);
 }

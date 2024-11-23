@@ -122,10 +122,10 @@ public class PatientFileService {
                 .body(resource);
     }
     // 나중에 환자 코드 사용해서 파일 가져오는 것으로 바꾸기
-    public ResponseEntity<Resource> downloadInterSpeechFile(String code) throws IOException {
+    public ResponseEntity<Resource> downloadInterSpeechFile(String filename) throws IOException {
         InterSpeechFile interSpeechFile = patientRepositoryBundle.getInterSpeechFileRepository()
-                .findInterSpeechFileByCode(code).orElseThrow(
-                        () -> new FileNotFoundException("This member has no file" + code));
+                .findInterSpeechFileByInterSpeechFileName(filename).orElseThrow(
+                        () -> new FileNotFoundException("This member has no file" + filename));
 
         File file = new File(interSpeechFile.getInterSpeechFilePath());
 
