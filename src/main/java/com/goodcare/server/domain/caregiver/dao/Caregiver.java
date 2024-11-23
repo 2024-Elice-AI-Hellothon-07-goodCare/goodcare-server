@@ -29,6 +29,7 @@ public class Caregiver {
     private LocalDate dateOfBirth;
 
     private String gender;
+
     @Column(name="contact_number")
     private String contactNumber;
 }
