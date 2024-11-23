@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
     @Query("select c from Caregiver c where c.code = :code")
     public Optional<Caregiver> findCaregiverByCode(@Param("code") String code);
+    @Query("select c from Caregiver c where c.code = :code and c.name = :name")
+    public Optional<Caregiver> findCaregiverByCodeAndName(@Param("code") String code, @Param("name") String name);
 }
