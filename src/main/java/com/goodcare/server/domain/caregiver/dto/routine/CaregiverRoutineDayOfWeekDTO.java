@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaregiverRoutineDayOfWeekDTO {
-    private String daysOfWeek; // 요일 지정 (월, 화, 수 등)
+    private List<String> daysOfWeek; // 요일 지정 (월, 화, 수 등)
 }

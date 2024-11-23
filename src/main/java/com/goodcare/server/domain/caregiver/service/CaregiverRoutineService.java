@@ -1,6 +1,7 @@
 package com.goodcare.server.domain.caregiver.service;
 
 import com.goodcare.server.domain.caregiver.dao.Caregiver;
+import com.goodcare.server.domain.caregiver.dto.routine.CaregiverRoutineStartTimeDTO;
 import com.goodcare.server.domain.caregiver.repository.CaregiverRepositoryBundle;
 import com.goodcare.server.domain.caregiver.dao.routine.CaregiverRoutine;
 import com.goodcare.server.domain.caregiver.dao.routine.CaregiverRoutineDayOfWeek;
@@ -13,7 +14,11 @@ import org.springframework.util.AlternativeJdkIdGenerator;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,18 +59,21 @@ public class CaregiverRoutineService {
         caregiverRepositoryBundle.getCaregiverRoutineRepository().save(caregiverRoutine);
 
         CaregiverRoutineStartTime caregiverRoutineStartTime = new CaregiverRoutineStartTime();
-        caregiverRoutineStartTime.setRoutineCode(routineCode);
-        caregiverRoutineStartTime.setStartTime(caregiverRoutineDTOBundle
-                .getCaregiverRoutineStartTimeDTO().getStartTime());
+        List<LocalTime> startTimeList = caregiverRoutineDTOBundle.getCaregiverRoutineStartTimeDTO().getStartTime();
+
+        for(LocalTime startTime : startTimeList){
+            caregiverRoutineStartTime.setRoutineCode(routineCode);
+            caregiverRoutineStartTime.setStartTime(startTime);
+        }
 
         caregiverRepositoryBundle.getCaregiverRoutineStartTimeRepository().save(caregiverRoutineStartTime);
 
         CaregiverRoutineDayOfWeek caregiverRoutineDayOfWeek = new CaregiverRoutineDayOfWeek();
-        caregiverRoutineDayOfWeek.setRoutineCode(routineCode);
-        caregiverRoutineDayOfWeek.setDaysOfWeek(URLEncoder.encode(caregiverRoutineDTOBundle
-                .getCaregiverRoutineDayOfWeekDTO().getDaysOfWeek()
-                , StandardCharsets.UTF_8));
-
+        List<String> dayOfWeekList = caregiverRoutineDTOBundle.getCaregiverRoutineDayOfWeekDTO().getDaysOfWeek();
+        for(String day : dayOfWeekList){
+            caregiverRoutineDayOfWeek.setRoutineCode(routineCode);
+            caregiverRoutineDayOfWeek.setDaysOfWeek(day);
+        }
         caregiverRepositoryBundle.getCaregiverRoutineDayOfWeekRepository().save(caregiverRoutineDayOfWeek);
 
         return true;

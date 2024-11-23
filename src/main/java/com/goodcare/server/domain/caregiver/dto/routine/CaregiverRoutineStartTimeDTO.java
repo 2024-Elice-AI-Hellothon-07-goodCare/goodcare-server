@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaregiverRoutineStartTimeDTO {
-    private LocalTime startTime; // 루틴 시작 시간
+    private List<LocalTime> startTime; // 루틴 시작 시간
 }
