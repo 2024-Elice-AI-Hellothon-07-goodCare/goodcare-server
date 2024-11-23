@@ -1,7 +1,7 @@
 package com.goodcare.server.domain.patient.controller;
 
-import com.goodcare.server.domain.patient.dao.PatientDAOBundle;
-import com.goodcare.server.domain.patient.dto.PatientInfoDTO;
+import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
+import com.goodcare.server.domain.patient.dto.patientinfodto.PatientDTO;
 import com.goodcare.server.domain.patient.service.PatientInfoService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
@@ -25,8 +25,8 @@ public class PatientInfoController {
             summary = "환자 정보 등록 API",
             description = "환자의 정보를 받아 DB에 등록합니다."
     )
-    public ApiResponse<?> registerPatient(@RequestBody PatientInfoDTO patientInfoDTO){
-        String result = patientInfoService.registerPatient(patientInfoDTO);
+    public ApiResponse<?> registerPatient(@RequestBody PatientDTO patientDTO){
+        String result = patientInfoService.registerPatient(patientDTO);
 
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }
@@ -37,7 +37,7 @@ public class PatientInfoController {
             description = "환자 코드를 활용하여 환자의 모든 정보를 DB에서 받아옵니다."
     )
     public ApiResponse<?> getPatientInfoByCode(@RequestParam("code") String code){
-        PatientDAOBundle result = patientInfoService.searchPatientByCode(code);
+        Patient result = patientInfoService.searchPatientByCode(code);
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }
 
@@ -47,7 +47,7 @@ public class PatientInfoController {
             description = "환자 이름을 활용하여 DB내 환자 정보를 받아옵니다(다수)"
     )
     public ApiResponse<?> getPatientInfosByName(@RequestParam("name") String name){
-        List<PatientDAOBundle> result = patientInfoService.searchPatientsByName(name);
+        List<Patient> result = patientInfoService.searchPatientsByName(name);
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }
 }

@@ -28,6 +28,9 @@ public class Patient {
 
     private String gender;
 
-    @Column(name="contact_number")
-    private String contactNumber;
+    @Column(name="main_disease")
+    private String mainDisease;
+
+    @Column(name = "underlying_disease")
+    private String underlyingDisease;
 }

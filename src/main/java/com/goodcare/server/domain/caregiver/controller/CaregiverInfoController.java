@@ -1,7 +1,6 @@
 package com.goodcare.server.domain.caregiver.controller;
 
-import com.goodcare.server.domain.caregiver.dto.CaregiverDTOBundle;
-import com.goodcare.server.domain.guardian.dto.GuardianDTOBundle;
+import com.goodcare.server.domain.caregiver.dto.caregiver.CaregiverDTO;
 import com.goodcare.server.domain.caregiver.service.CaregiverInfoService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
@@ -23,9 +22,9 @@ public class CaregiverInfoController {
             summary = "간병인 정보 가입 API",
             description = "간병인 회원가입시 정보를 받아 DB에 저장합니다."
     )
-    public ApiResponse<?> saveCaregiver(@RequestBody CaregiverDTOBundle caregiverDTOBundle)
+    public ApiResponse<?> saveCaregiver(@RequestBody CaregiverDTO caregiverDTO)
     {
-        Boolean result = caregiverInfoService.saveCaregiver(caregiverDTOBundle);
+        Boolean result = caregiverInfoService.saveCaregiver(caregiverDTO);
         
         if(!result)
             return ApiResponse.onFailure(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), false);

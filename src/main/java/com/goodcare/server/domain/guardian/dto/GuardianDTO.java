@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.guardian.dto.guardian;
+package com.goodcare.server.domain.guardian.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

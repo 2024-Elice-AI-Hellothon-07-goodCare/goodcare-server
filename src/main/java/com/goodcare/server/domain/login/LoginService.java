@@ -2,7 +2,6 @@ package com.goodcare.server.domain.login;
 
 import com.goodcare.server.domain.caregiver.dao.Caregiver;
 import com.goodcare.server.domain.caregiver.repository.CaregiverRepositoryBundle;
-import com.goodcare.server.domain.guardian.repository.GuardianRepositoryBundle;
 import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class LoginService {
-    private final GuardianRepositoryBundle guardianRepositoryBundle;
     private final PatientRepositoryBundle  patientRepositoryBundle;
     private final CaregiverRepositoryBundle caregiverRepositoryBundle;
 

@@ -2,13 +2,11 @@ package com.goodcare.server.domain.caregiver.service;
 
 import com.goodcare.server.domain.caregiver.dao.Caregiver;
 import com.goodcare.server.domain.caregiver.repository.CaregiverRepositoryBundle;
-import com.goodcare.server.domain.guardian.dao.Guardian;
 import com.goodcare.server.domain.caregiver.dao.routine.CaregiverRoutine;
 import com.goodcare.server.domain.caregiver.dao.routine.CaregiverRoutineDayOfWeek;
 import com.goodcare.server.domain.caregiver.dao.routine.CaregiverRoutineStartTime;
 import com.goodcare.server.domain.caregiver.dto.CaregiverRoutineDTOBundle;
 import com.goodcare.server.domain.caregiver.dto.routine.CaregiverRoutineDTO;
-import com.goodcare.server.domain.guardian.repository.GuardianRepositoryBundle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AlternativeJdkIdGenerator;

@@ -11,10 +11,6 @@ import org.springframework.stereotype.Repository;
 @Getter
 public class PatientRepositoryBundle {
     private final PatientRepository patientRepository;
-    private final HealthInfoRepository healthInfoRepository;
-    private final EmergencyContactRepository emergencyContactRepository;
-    private final MedicalServiceNeedsRepository medicalServiceNeedsRepository;
-    private final ResidentialInfoRepository residentialInfoRepository;
     private final PatientFileRepository patientFileRepository;
     private final ConsciousnessRepository consciousnessRepository;
     private final DailyCheckListRepository dailyCheckListRepository;
