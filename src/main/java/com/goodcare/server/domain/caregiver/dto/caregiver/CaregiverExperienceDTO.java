@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.caregiver.dto;
+package com.goodcare.server.domain.caregiver.dto.caregiver;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 public class CaregiverExperienceDTO {
     private Integer yearsOfExperience;
 
-    private boolean hasCertification;
+    private Boolean hasCertification;
 
-    private boolean completedTraining;
+    private Boolean completedTraining;
 }

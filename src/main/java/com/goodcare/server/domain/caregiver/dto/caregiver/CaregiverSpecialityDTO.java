@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.caregiver.dto;
+package com.goodcare.server.domain.caregiver.dto.caregiver;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaregiverScheduleDTO {
-
-    private String availableHours;
-
-    private String dayOff;
+public class CaregiverSpecialityDTO {
+    private Boolean specialPatientCareExperience;
 }

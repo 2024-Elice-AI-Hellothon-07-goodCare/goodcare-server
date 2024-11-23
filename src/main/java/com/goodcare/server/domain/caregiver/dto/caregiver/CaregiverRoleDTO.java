@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.caregiver.dto;
+package com.goodcare.server.domain.caregiver.dto.caregiver;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CaregiverRoleDTO {
 
-    private boolean isPrimeGaurdian;
+    private Boolean isPrimeGaurdian;
 
-    private boolean needsGuardianInfo;
+    private Boolean needsGuardianInfo;
 }

@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.caregiver.dto;
+package com.goodcare.server.domain.caregiver.dto.caregiver;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaregiverDTO {
+    private String patientCode;
     private String name;
     private LocalDate dateOfBirth;
     private String gender;

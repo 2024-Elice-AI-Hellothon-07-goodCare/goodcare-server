@@ -17,5 +17,5 @@ public class CaregiverSpeciality {
     private String code;
 
     @Column(name="special_patient_care_experience")
-    private boolean specialPatientCareExperience;
+    private Boolean specialPatientCareExperience;
 }

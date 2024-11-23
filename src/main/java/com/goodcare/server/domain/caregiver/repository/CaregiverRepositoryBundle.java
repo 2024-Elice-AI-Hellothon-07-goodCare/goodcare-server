@@ -13,4 +13,7 @@ public class CaregiverRepositoryBundle {
     private final CaregiverRoleRepository caregiverRoleRepository;
     private final CaregiverScheduleRepository caregiverScheduleRepository;
     private final CaregiverSpecialityRepository caregiverSpecialityRepository;
+    private final CaregiverRoutineRepository caregiverRoutineRepository;
+    private final CaregiverRoutineDayOfWeekRepository caregiverRoutineDayOfWeekRepository;
+    private final CaregiverRoutineStartTimeRepository caregiverRoutineStartTimeRepository;
 }

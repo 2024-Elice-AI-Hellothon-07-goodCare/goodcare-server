@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.guardian.dao.routine;
+package com.goodcare.server.domain.caregiver.dao.routine;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name="guardian_routine")
-public class GuardianRoutine {
+@Table(name="caregiver_routine")
+public class CaregiverRoutine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
     private Long id;

@@ -17,8 +17,8 @@ public class CaregiverRole {
     private String code;
 
     @Column(name="is_prime_gaurdian")
-    private boolean isPrimeGaurdian;
+    private Boolean isPrimeGaurdian;
 
     @Column(name="needs_guardian_info")
-    private boolean needsGuardianInfo;
+    private Boolean needsGuardianInfo;
 }

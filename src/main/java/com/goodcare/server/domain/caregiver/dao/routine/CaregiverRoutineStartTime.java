@@ -1,14 +1,15 @@
-package com.goodcare.server.domain.guardian.dao.routine;
+package com.goodcare.server.domain.caregiver.dao.routine;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name="guardian_routine_day_of_week")
-public class GuardianRoutineDayOfWeek {
+@Table(name="Caregiver_routine_start_time")
+public class CaregiverRoutineStartTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
     private Long id;
@@ -16,6 +17,6 @@ public class GuardianRoutineDayOfWeek {
     @Column(name="routine_code", nullable = false)
     private String routineCode;
 
-    @Column(name = "days_of_week")
-    private String daysOfWeek; // 요일 지정 (월, 화, 수 등)
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime; // 루틴 시작 시간
 }

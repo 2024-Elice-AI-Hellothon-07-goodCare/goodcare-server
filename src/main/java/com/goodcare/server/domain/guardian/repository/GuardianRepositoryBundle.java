@@ -11,7 +11,5 @@ public class GuardianRepositoryBundle {
     private final GuardianRepository guardianRepository;
     private final GuardianConsentRepository guardianConsentRepository;
     private final GuardianContactPreferenceRepository guardianContactPreferenceRepository;
-    private final GuardianRoutineRepository guardianRoutineRepository;
-    private final GuardianRoutineDayOfWeekRepository guardianRoutineDayOfWeekRepository;
-    private final GuardianRoutineStartTimeRepository guardianRoutineStartTimeRepository;
+
 }

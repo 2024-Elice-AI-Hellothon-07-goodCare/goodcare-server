@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.guardian.dto.routine;
+package com.goodcare.server.domain.caregiver.dto.routine;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuardianRoutineDTO {
-    private String guardianCode; // 간병인 코드
+public class CaregiverRoutineDTO {
+    private String caregiverCode; // 간병인 코드
     
     private String name; // 루틴 이름
 

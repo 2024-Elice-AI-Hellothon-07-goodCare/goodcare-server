@@ -10,6 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface GuardianRepository extends JpaRepository<Guardian, Long> {
-    @Query("select g from Guardian g where g.code = :code")
-    public Optional<Guardian> findGuardianByCode(@Param("code") String code);
+
 }
