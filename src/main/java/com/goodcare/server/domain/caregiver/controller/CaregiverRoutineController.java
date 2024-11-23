@@ -1,16 +1,18 @@
 package com.goodcare.server.domain.caregiver.controller;
 
+import com.goodcare.server.domain.caregiver.dao.CaregiverRoutineBundle;
 import com.goodcare.server.domain.caregiver.dto.CaregiverRoutineDTOBundle;
+import com.goodcare.server.domain.caregiver.dto.SearchRoutineDTO;
 import com.goodcare.server.domain.caregiver.service.CaregiverRoutineService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/caregiver/routine")
@@ -29,5 +31,17 @@ public class CaregiverRoutineController {
         return result ?
                 ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), true) :
                 ApiResponse.onFailure(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), false);
+    }
+
+    @GetMapping("/get")
+    @Operation(
+            summary = "루틴 조회 API",
+            description="환자 코드와 오늘 날짜를 활용하여 등록된 루틴을 조회합니다."
+    )public ApiResponse<?> getRoutineList(
+            @RequestParam("code")String patientCode
+    ){
+        List<SearchRoutineDTO> result = caregiverRoutineService.searchRoutine(patientCode);
+
+        return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }
 }
