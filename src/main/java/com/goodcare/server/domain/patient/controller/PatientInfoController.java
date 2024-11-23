@@ -41,7 +41,7 @@ public class PatientInfoController {
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }
 
-    @GetMapping("/get/name  ")
+    @GetMapping("/get/name")
     @Operation(
             summary = "환자 정보 검색 API(환자 이름 사용)",
             description = "환자 이름을 활용하여 DB내 환자 정보를 받아옵니다(다수)"

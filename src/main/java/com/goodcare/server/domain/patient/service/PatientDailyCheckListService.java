@@ -3,6 +3,7 @@ package com.goodcare.server.domain.patient.service;
 import com.goodcare.server.domain.patient.dao.dailychecklist.*;
 import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
+import com.goodcare.server.domain.patient.dto.dailychecklistdto.VitalSignsDTO;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,5 +90,13 @@ public class PatientDailyCheckListService {
         patientRepositoryBundle.getSpecialNotesRepository().save(specialNotes);
 
         return true;
+    }
+
+    public VitalSignsDTO getVitalSignsDTO(String code){
+        VitalSignsDTO vitalSignsDTO = new VitalSignsDTO();
+
+
+
+        return vitalSignsDTO;
     }
 }
