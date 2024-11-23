@@ -1,6 +1,6 @@
 package com.goodcare.server.domain.patient.repository.patientinfo;
 
-import com.goodcare.server.domain.patient.dao.PatientFile;
+import com.goodcare.server.domain.patient.dao.patientinfo.PatientFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

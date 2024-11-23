@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.guardian.dto;
+package com.goodcare.server.domain.guardian.dto.guardian;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuardianConsentDTO {
-    private boolean medicalCareAccessConsent;
+public class GuardianContactPreferenceDTO {
+    private String preferredContactMethod;
 }

@@ -1,4 +1,4 @@
-package com.goodcare.server.domain.patient.dao;
+package com.goodcare.server.domain.patient.dao.patientinfo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,8 +13,8 @@ public class MedicalServiceNeeds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "patinet_code", nullable = false)
-    private String patinetCode;
+    @Column(name = "patient_code", nullable = false)
+    private String patientCode;
 
     @Column(name = "regular_checkups")
     private Boolean regularCheckups;

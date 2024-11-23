@@ -17,5 +17,5 @@ public class GuardianConsent {
     private String code;
 
     @Column(name = "medical_care_access_consent")
-    private boolean medicalCareAccessConsent;
+    private Boolean medicalCareAccessConsent;
 }

@@ -1,0 +1,262 @@
+[
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "노수민",
+      "emergencyContact": "010-8644-5881",
+      "relationship": "친구"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "대장암",
+      "medications": "진통제",
+      "allergies": "견과류"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "재활치료",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "최예준",
+      "dateOfBirth": "1980-02-06",
+      "gender": "남",
+      "contactNumber": "043-203-6691"
+    },
+    "residentialInfoDTO": {
+      "residence": "인천광역시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "김주원",
+      "emergencyContact": "02-7496-5515",
+      "relationship": "배우자"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "고혈압",
+      "medications": "흡입기",
+      "allergies": "갑각류"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "항암치료중",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "박성진",
+      "dateOfBirth": "1944-04-19",
+      "gender": "남",
+      "contactNumber": "070-5159-8148"
+    },
+    "residentialInfoDTO": {
+      "residence": "부산광역시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "홍영자",
+      "emergencyContact": "010-7499-0684",
+      "relationship": "딸"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "대장암",
+      "medications": "혈압약",
+      "allergies": "유제품"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "심리치료",
+      "specialNursing": true
+    },
+    "patientDTO": {
+      "name": "신중수",
+      "dateOfBirth": "1960-10-10",
+      "gender": "남",
+      "contactNumber": "042-391-5004"
+    },
+    "residentialInfoDTO": {
+      "residence": "부산광역시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "이정남",
+      "emergencyContact": "041-717-6395",
+      "relationship": "형제"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "고혈압",
+      "medications": "혈압약",
+      "allergies": "유제품"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "호흡기치료",
+      "specialNursing": true
+    },
+    "patientDTO": {
+      "name": "문수민",
+      "dateOfBirth": "1944-10-24",
+      "gender": "남",
+      "contactNumber": "043-451-6639"
+    },
+    "residentialInfoDTO": {
+      "residence": "서울특별시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "구예준",
+      "emergencyContact": "011-967-1803",
+      "relationship": "딸"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "고혈압",
+      "medications": "항암약",
+      "allergies": "약물"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": false,
+      "treatments": "심리치료",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "이숙자",
+      "dateOfBirth": "1965-10-24",
+      "gender": "여",
+      "contactNumber": "053-883-0117"
+    },
+    "residentialInfoDTO": {
+      "residence": "인천광역시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "곽서윤",
+      "emergencyContact": "055-454-0378",
+      "relationship": "형제"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "고혈압",
+      "medications": "인슐린",
+      "allergies": "갑각류"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "재활치료",
+      "specialNursing": true
+    },
+    "patientDTO": {
+      "name": "박건우",
+      "dateOfBirth": "1981-04-01",
+      "gender": "여",
+      "contactNumber": "017-884-4591"
+    },
+    "residentialInfoDTO": {
+      "residence": "경기도 광주"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "나영길",
+      "emergencyContact": "018-258-9926",
+      "relationship": "형제"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "당뇨병",
+      "medications": "흡입기",
+      "allergies": "갑각류"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "재활치료",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "허지혜",
+      "dateOfBirth": "1968-06-10",
+      "gender": "남",
+      "contactNumber": "054-640-0150"
+    },
+    "residentialInfoDTO": {
+      "residence": "서울특별시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "이정수",
+      "emergencyContact": "054-798-9259",
+      "relationship": "배우자"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "고혈압",
+      "medications": "진통제",
+      "allergies": "약물"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": false,
+      "treatments": "물리치료",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "이보람",
+      "dateOfBirth": "1980-02-07",
+      "gender": "여",
+      "contactNumber": "064-749-0347"
+    },
+    "residentialInfoDTO": {
+      "residence": "경기도 광주"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "이은정",
+      "emergencyContact": "051-018-4643",
+      "relationship": "배우자"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "대장암",
+      "medications": "혈압약",
+      "allergies": "유제품"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": false,
+      "treatments": "호흡기치료",
+      "specialNursing": false
+    },
+    "patientDTO": {
+      "name": "최정호",
+      "dateOfBirth": "1935-01-17",
+      "gender": "남",
+      "contactNumber": "033-731-7264"
+    },
+    "residentialInfoDTO": {
+      "residence": "인천광역시"
+    }
+  },
+  {
+    "emergencyContactDTO": {
+      "emergencyName": "정은정",
+      "emergencyContact": "070-5379-4852",
+      "relationship": "친구"
+    },
+    "healthInfoDTO": {
+      "diseaseHistory": "대장암",
+      "medications": "진통제",
+      "allergies": "유제품"
+    },
+    "medicalServiceNeedsDTO": {
+      "regularCheckups": true,
+      "treatments": "심리치료",
+      "specialNursing": true
+    },
+    "patientDTO": {
+      "name": "권서윤",
+      "dateOfBirth": "1939-04-21",
+      "gender": "여",
+      "contactNumber": "063-358-3985"
+    },
+    "residentialInfoDTO": {
+      "residence": "경기도 광주"
+    }
+  }
+]

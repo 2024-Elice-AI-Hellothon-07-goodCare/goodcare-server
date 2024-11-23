@@ -1,6 +1,6 @@
 package com.goodcare.server.domain.patient.service;
 
-import com.goodcare.server.domain.patient.dao.PatientFile;
+import com.goodcare.server.domain.patient.dao.patientinfo.PatientFile;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
