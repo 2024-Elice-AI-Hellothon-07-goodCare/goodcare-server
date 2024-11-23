@@ -20,5 +20,9 @@ public interface DailyCheckListRepository extends JpaRepository<DailyCheckList, 
 
     @Modifying
     @Query("update DailyCheckList d set d.analysisData = :data where d.code = :code")
-    int updateDailyCheckListByAnalysisData(@Param("data") String data, @Param("code") String code);
+    public int updateDailyCheckListByAnalysisData(@Param("data") String data, @Param("code") String code);
+
+    @Modifying
+    @Query("update DailyCheckList d set d.analysisWord = :data where d.code = :code")
+    public int updateDailyCheckListByAnalysisWord(@Param("data") String data, @Param("code") String code);
 }

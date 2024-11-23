@@ -1,7 +1,9 @@
 package com.goodcare.server.domain.caregiver.controller;
 
 import com.goodcare.server.domain.caregiver.dto.caregiver.CaregiverDTO;
+import com.goodcare.server.domain.caregiver.dto.caregiver.CaregiverRegisterDTO;
 import com.goodcare.server.domain.caregiver.service.CaregiverInfoService;
+import com.goodcare.server.domain.patient.dto.patientinfodto.RegisterDTO;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,12 +26,14 @@ public class CaregiverInfoController {
     )
     public ApiResponse<?> saveCaregiver(@RequestBody CaregiverDTO caregiverDTO)
     {
-        Boolean result = caregiverInfoService.saveCaregiver(caregiverDTO);
+        CaregiverRegisterDTO result = caregiverInfoService.saveCaregiver(caregiverDTO);
         
-        if(!result)
-            return ApiResponse.onFailure(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), false);
+        if(!result.getSuccess())
+            return ApiResponse.onFailure(Status.CONFLICT.getCode(),
+                    Status.CONFLICT.getMessage(), result);
         else
-            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), true);
+            return ApiResponse.onSuccess(Status.OK.getCode(),
+                    Status.OK.getMessage(), result);
     }
 
     @GetMapping("/get/patient-name")

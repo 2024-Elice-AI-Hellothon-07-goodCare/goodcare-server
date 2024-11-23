@@ -28,6 +28,9 @@ public class DailyCheckList {
     @Column(name = "analysis_data", columnDefinition = "TEXT")
     private String analysisData;
 
+    @Column(name = "analysis_word")
+    private String analysisWord;
+
     @Override
     public String toString() {
         return "DailyCheckList{" +

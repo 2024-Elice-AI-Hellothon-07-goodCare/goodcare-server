@@ -11,7 +11,6 @@ import com.goodcare.server.global.response.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -109,13 +108,25 @@ public class PatientDailyCheckListController {
                         "이 환자의 건강상태 확인표를 보고 환자의 건강 상태를 1줄로 말해줘."
         );
 
+        String statusData = patientAIService.getChat(
+                dailyCheckListString +
+                        "이 환자의 건강상태 확인표를 보고 환자의 건강 상태를 (나쁨, 보통, 좋음)" +
+                        "이 3단어 중 1단어만 뽑아서 보여줘. 다른 말 붙이지 말고 저 단어 1개만."
+        );
+
+        String[] listData = {analysisData, statusData};
+
         DailyCheckListBundle bundle = patientDailyCheckListService.
                 getDateDailyCheckListBundle(date, code);
+
         DailyCheckList dailyCheckList = bundle.getDailyCheckList();
         dailyCheckList.setAnalysisData(analysisData);
-        int rowsUpdated = patientDailyCheckListService.modifyDailyCheckList(dailyCheckList);
-        if (rowsUpdated > 0) {
-            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), analysisData);
+        dailyCheckList.setAnalysisWord(statusData);
+
+        int dataUpdated = patientDailyCheckListService.setAnalysisData(dailyCheckList);
+        int wordUpdated = patientDailyCheckListService.setAnalysisWord(dailyCheckList);
+        if (dataUpdated > 0 && wordUpdated > 0) {
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), listData);
         } else {
             return ApiResponse.onFailure(Status.INTERNAL_SERVER_ERROR.getCode(),
                     Status.INTERNAL_SERVER_ERROR.getMessage(), "응답 생성에 실패하였습니다.");

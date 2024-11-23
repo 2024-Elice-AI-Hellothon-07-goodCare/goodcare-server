@@ -2,6 +2,7 @@ package com.goodcare.server.domain.caregiver.service;
 
 import com.goodcare.server.domain.caregiver.dao.*;
 import com.goodcare.server.domain.caregiver.dto.caregiver.CaregiverDTO;
+import com.goodcare.server.domain.caregiver.dto.caregiver.CaregiverRegisterDTO;
 import com.goodcare.server.domain.caregiver.repository.CaregiverRepositoryBundle;
 import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
@@ -22,14 +23,17 @@ public class CaregiverInfoService {
         return uuid.toString();
     }
 
-    public Boolean saveCaregiver(CaregiverDTO caregiverDTO) {
+    public CaregiverRegisterDTO saveCaregiver(CaregiverDTO caregiverDTO) {
         String caregiverCode = getUUID().substring(0, 6).toUpperCase();
 
         Patient patient = patientRepositoryBundle.getPatientRepository()
                 .findByCode(caregiverDTO.getPatientCode()).orElse(null);
 
         if(patient == null){
-            return false;
+            CaregiverRegisterDTO caregiverRegisterDTO = new CaregiverRegisterDTO();
+            caregiverRegisterDTO.setCaregiver(null);
+            caregiverRegisterDTO.setSuccess(false);
+
         }
 
         Caregiver caregiver = new Caregiver();
@@ -43,7 +47,11 @@ public class CaregiverInfoService {
 
         caregiverRepositoryBundle.getCaregiverRepository().save(caregiver);
 
-        return true;
+        CaregiverRegisterDTO caregiverRegisterDTO = new CaregiverRegisterDTO();
+        caregiverRegisterDTO.setCaregiver(caregiver);
+        caregiverRegisterDTO.setSuccess(true);
+
+        return caregiverRegisterDTO;
     }
     public String getPatientNameByCaregiverCode(String code){
         Caregiver caregiver = caregiverRepositoryBundle.getCaregiverRepository()

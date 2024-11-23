@@ -6,10 +6,8 @@ import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
 import com.goodcare.server.domain.patient.dto.dailychecklistdto.VitalSignsDTO;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
-import com.goodcare.server.domain.patient.repository.dailychecklist.DailyCheckListRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AlternativeJdkIdGenerator;
 import org.webjars.NotFoundException;
@@ -177,7 +175,7 @@ public class PatientDailyCheckListService {
     }
 
     @Transactional
-    public int modifyDailyCheckList(DailyCheckList dailyCheckList) {
+    public int setAnalysisData(DailyCheckList dailyCheckList) {
         String data = dailyCheckList.getAnalysisData();
         String code = dailyCheckList.getCode();
 
@@ -188,5 +186,19 @@ public class PatientDailyCheckListService {
 
         return patientRepositoryBundle.getDailyCheckListRepository()
                 .updateDailyCheckListByAnalysisData(data, code);
+    }
+
+    @Transactional
+    public int setAnalysisWord(DailyCheckList dailyCheckList) {
+        String data = dailyCheckList.getAnalysisWord();
+        String code = dailyCheckList.getCode();
+
+        // 유효성 검사
+        if (data == null || code == null) {
+            throw new IllegalArgumentException("Analysis word and code must not be null");
+        }
+
+        return patientRepositoryBundle.getDailyCheckListRepository()
+                .updateDailyCheckListByAnalysisWord(data, code);
     }
 }
