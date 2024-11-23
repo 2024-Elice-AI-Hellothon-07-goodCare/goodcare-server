@@ -42,7 +42,7 @@ public class PatientAIService {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api-cloud-function.elice.io/5a327f26-cc55-45c5-92b7-e909c2df0ba4/v1/chat/completions"))
                 .header("accept", "application/json")
-                .header("content-type", "multipart/form-data")
+                .header("content-type", "application/json")
                 .header("authorization", "Bearer " + getMlApiKey())
                 .method("POST", HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();

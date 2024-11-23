@@ -33,4 +33,19 @@ public class VitalSigns {
 
     @Column(name="respiration_rate", nullable = false)
     private Integer respirationRate;    // 호흠수
+
+    @Override
+    public String toString() {
+        return "VitalSigns{" +
+                "id=" + id +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", temperature=" + temperature +
+                ", bloodPressureSys=" + bloodPressureSys +
+                ", bloodPressureDia=" + bloodPressureDia +
+                ", pulse=" + pulse +
+                ", oxygen=" + oxygen +
+                ", respirationRate=" + respirationRate +
+                '}';
+    }
+
 }

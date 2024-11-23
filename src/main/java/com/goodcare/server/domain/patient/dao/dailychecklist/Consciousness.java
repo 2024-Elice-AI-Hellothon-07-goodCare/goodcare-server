@@ -23,4 +23,14 @@ public class Consciousness {
 
     @Column(name="mood_behaviour")
     private MoodBehaviour moodBehaviour;
+
+    @Override
+    public String toString() {
+        return "Consciousness{" +
+                "id=" + id +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", consciousnessLevel=" + consciousnessLevel +
+                ", moodBehaviour=" + moodBehaviour +
+                '}';
+    }
 }

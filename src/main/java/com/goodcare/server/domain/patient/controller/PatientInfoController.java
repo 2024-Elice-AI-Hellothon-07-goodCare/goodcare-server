@@ -2,6 +2,7 @@ package com.goodcare.server.domain.patient.controller;
 
 import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.dto.patientinfodto.PatientDTO;
+import com.goodcare.server.domain.patient.dto.patientinfodto.RegisterDTO;
 import com.goodcare.server.domain.patient.service.PatientInfoService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
@@ -26,7 +27,7 @@ public class PatientInfoController {
             description = "환자의 정보를 받아 DB에 등록합니다."
     )
     public ApiResponse<?> registerPatient(@RequestBody PatientDTO patientDTO){
-        String result = patientInfoService.registerPatient(patientDTO);
+        RegisterDTO result = patientInfoService.registerPatient(patientDTO);
 
         return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), result);
     }

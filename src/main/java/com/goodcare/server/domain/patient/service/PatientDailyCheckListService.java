@@ -6,7 +6,10 @@ import com.goodcare.server.domain.patient.dao.patientinfo.Patient;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
 import com.goodcare.server.domain.patient.dto.dailychecklistdto.VitalSignsDTO;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
+import com.goodcare.server.domain.patient.repository.dailychecklist.DailyCheckListRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AlternativeJdkIdGenerator;
 import org.webjars.NotFoundException;
@@ -161,5 +164,29 @@ public class PatientDailyCheckListService {
         dailyCheckListBundle.setSpecialNotes(specialNotes);
 
         return dailyCheckListBundle;
+    }
+
+    public String aiAnalysisOnSentenceDailyCheckList(String code, LocalDate date) {
+        DailyCheckListBundle dailyCheckListBundle = getDateDailyCheckListBundle(date, code);
+
+        return  dailyCheckListBundle.getVitalSigns().toString() +
+                dailyCheckListBundle.getConsciousness().toString() +
+                dailyCheckListBundle.getMedications().toString() +
+                dailyCheckListBundle.getPhysicalStatus().toString()+
+                dailyCheckListBundle.getSpecialNotes().toString();
+    }
+
+    @Transactional
+    public int modifyDailyCheckList(DailyCheckList dailyCheckList) {
+        String data = dailyCheckList.getAnalysisData();
+        String code = dailyCheckList.getCode();
+
+        // 유효성 검사
+        if (data == null || code == null) {
+            throw new IllegalArgumentException("Analysis data and code must not be null");
+        }
+
+        return patientRepositoryBundle.getDailyCheckListRepository()
+                .updateDailyCheckListByAnalysisData(data, code);
     }
 }

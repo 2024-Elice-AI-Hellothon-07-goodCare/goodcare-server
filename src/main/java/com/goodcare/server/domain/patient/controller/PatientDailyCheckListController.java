@@ -1,8 +1,10 @@
 package com.goodcare.server.domain.patient.controller;
 
 import com.goodcare.server.domain.patient.dao.DailyCheckListBundle;
+import com.goodcare.server.domain.patient.dao.dailychecklist.DailyCheckList;
 import com.goodcare.server.domain.patient.dto.PatientDailyCheckListDTOBundle;
 import com.goodcare.server.domain.patient.dto.dailychecklistdto.VitalSignsDTO;
+import com.goodcare.server.domain.patient.service.PatientAIService;
 import com.goodcare.server.domain.patient.service.PatientDailyCheckListService;
 import com.goodcare.server.global.response.ApiResponse;
 import com.goodcare.server.global.response.Status;
@@ -12,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 @RestController
@@ -21,6 +24,7 @@ import java.time.LocalDate;
 public class PatientDailyCheckListController {
 
     private final PatientDailyCheckListService patientDailyCheckListService;
+    private final PatientAIService patientAIService;
 
     @PostMapping("/input")
     @Operation(
@@ -57,8 +61,8 @@ public class PatientDailyCheckListController {
 
     @GetMapping("/get/checklist")
     @Operation(
-            summary = "환자 일일 건강 상태 체크리스트 오늘 일자 체크 api",
-            description = "환자 일일 건강 상태 체크리스트를 입력하기전 오늘 날짜의 체크리스트가 있는지 확인합니다."
+            summary = "환자 일일 건강 상태 체크리스트 반환 api",
+            description = "특정 날짜의 체크리스트를 반환합니다"
     )
     public ApiResponse<?> hasTodayChecklist(
             @RequestParam("date") LocalDate date,
@@ -86,5 +90,36 @@ public class PatientDailyCheckListController {
         }else{
             return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), vitalSignsDTO);
         }
+    }
+
+    @GetMapping("/get/ai-analysis")
+    @Operation(
+            summary = "인공지능 건강 분석 API",
+            description = "인공지능이 분석한 오늘의 건강 분석 결과를 반환합니다."
+    )
+    public ApiResponse<?> getAiAnalysis(
+            @RequestParam("date") LocalDate date,
+            @RequestParam("code") String code
+    ) throws IOException, InterruptedException {
+        String dailyCheckListString = patientDailyCheckListService
+                .aiAnalysisOnSentenceDailyCheckList(code, date);
+
+        String analysisData = patientAIService.getChat(
+                dailyCheckListString +
+                        "이 환자의 건강상태 확인표를 보고 환자의 건강 상태를 1줄로 말해줘."
+        );
+
+        DailyCheckListBundle bundle = patientDailyCheckListService.
+                getDateDailyCheckListBundle(date, code);
+        DailyCheckList dailyCheckList = bundle.getDailyCheckList();
+        dailyCheckList.setAnalysisData(analysisData);
+        int rowsUpdated = patientDailyCheckListService.modifyDailyCheckList(dailyCheckList);
+        if (rowsUpdated > 0) {
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(), analysisData);
+        } else {
+            return ApiResponse.onFailure(Status.INTERNAL_SERVER_ERROR.getCode(),
+                    Status.INTERNAL_SERVER_ERROR.getMessage(), "응답 생성에 실패하였습니다.");
+        }
+
     }
 }

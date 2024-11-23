@@ -19,4 +19,13 @@ public class SpecialNotes {
     @Column(name="special_notes", columnDefinition = "TEXT")
     private String specialNotes;
 
+    @Override
+    public String toString() {
+        return "SpecialNotes{" +
+                "id=" + id +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", specialNotes='" + specialNotes + '\'' +
+                '}';
+    }
+
 }

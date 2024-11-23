@@ -2,6 +2,7 @@ package com.goodcare.server.domain.patient.service;
 
 import com.goodcare.server.domain.patient.dao.patientinfo.*;
 import com.goodcare.server.domain.patient.dto.patientinfodto.PatientDTO;
+import com.goodcare.server.domain.patient.dto.patientinfodto.RegisterDTO;
 import com.goodcare.server.domain.patient.repository.PatientRepositoryBundle;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class PatientInfoService {
         return uuid.toString();
     }
 
-    public String registerPatient(PatientDTO patientDTO){
+    public RegisterDTO registerPatient(PatientDTO patientDTO){
         // 먼저 환자 고유코드 만들기
         // 고유코드는 영문 대문자 + 숫자 조합의 6자리 코드
         String patientCode = getUUID().substring(0,6).toUpperCase();
@@ -40,7 +41,12 @@ public class PatientInfoService {
 
         // 모든 DAO DB에 저장
         patientRepositoryBundle.getPatientRepository().save(patient);
-        return "success";
+
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setPatient(patient);
+        registerDTO.setSuccess(true);
+
+        return registerDTO;
     }
 
     public Patient searchPatientByCode(String code){

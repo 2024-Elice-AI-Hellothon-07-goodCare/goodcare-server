@@ -24,4 +24,18 @@ public class DailyCheckList {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDate createdAt;
+
+    @Column(name = "analysis_data", columnDefinition = "TEXT")
+    private String analysisData;
+
+    @Override
+    public String toString() {
+        return "DailyCheckList{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", patientCode='" + patientCode + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
 }

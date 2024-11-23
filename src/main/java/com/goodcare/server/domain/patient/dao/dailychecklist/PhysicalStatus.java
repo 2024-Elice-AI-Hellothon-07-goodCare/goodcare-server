@@ -28,4 +28,16 @@ public class PhysicalStatus {
 
     @Column(name="mobility", nullable = false)
     private Mobility mobility;
+
+    @Override
+    public String toString() {
+        return "PhysicalStatus{" +
+                "id=" + id +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", skinCondition=" + skinCondition +
+                ", painLevel=" + painLevel +
+                ", mobility=" + mobility +
+                '}';
+    }
+
 }

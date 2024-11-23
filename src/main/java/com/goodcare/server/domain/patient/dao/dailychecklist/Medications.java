@@ -21,4 +21,15 @@ public class Medications {
 
     @Column(name="side_effects")
     private String sideEffects;
+
+    @Override
+    public String toString() {
+        return "Medications{" +
+                "id=" + id +
+                ", checkListCode='" + checkListCode + '\'' +
+                ", medicationTaken=" + medicationTaken +
+                ", sideEffects='" + sideEffects + '\'' +
+                '}';
+    }
+
 }
