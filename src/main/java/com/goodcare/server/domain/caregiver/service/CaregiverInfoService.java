@@ -33,7 +33,6 @@ public class CaregiverInfoService {
             CaregiverRegisterDTO caregiverRegisterDTO = new CaregiverRegisterDTO();
             caregiverRegisterDTO.setCaregiver(null);
             caregiverRegisterDTO.setSuccess(false);
-
         }
 
         Caregiver caregiver = new Caregiver();
@@ -53,6 +52,7 @@ public class CaregiverInfoService {
 
         return caregiverRegisterDTO;
     }
+
     public String getPatientNameByCaregiverCode(String code){
         Caregiver caregiver = caregiverRepositoryBundle.getCaregiverRepository()
                 .findCaregiverByCode(code).orElse(null);
