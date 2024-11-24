@@ -44,6 +44,26 @@ public class PatientDailyCheckListController {
             return ApiResponse.onSuccess(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), LocalDate.now() + "일자 입력에 실패하였습니다.");
     }
 
+    @PostMapping("/input/test")
+    @Operation(
+            summary = "환자 일일 건강 상태 체크리스트 삽입 api",
+            description = "환자 일일 건강 상태 체크리스트 완료 후 db에 저장합니다."
+    )
+    public ApiResponse<?> inputDailyCheckListTest(
+            @RequestBody PatientDailyCheckListDTOBundle patientDailyCheckListDTOBundle,
+            @RequestParam("date") LocalDate date,
+            @RequestParam("code") String patientCode
+    ){
+
+        Boolean result = patientDailyCheckListService.saveDailyCheckListTest(patientDailyCheckListDTOBundle,
+                date, patientCode);
+        if(result)
+            return ApiResponse.onSuccess(Status.OK.getCode(), Status.OK.getMessage(),
+                    date + "일자 체크리스트 입력 성공!");
+        else
+            return ApiResponse.onSuccess(Status.CONFLICT.getCode(), Status.CONFLICT.getMessage(), LocalDate.now() + "일자 입력에 실패하였습니다.");
+    }
+
     @GetMapping("/check-today")
     @Operation(
             summary = "환자 일일 건강 상태 체크리스트 오늘 일자 체크 api",

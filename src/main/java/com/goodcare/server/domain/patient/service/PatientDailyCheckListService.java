@@ -92,6 +92,66 @@ public class PatientDailyCheckListService {
         return true;
     }
 
+    // 체크리스트 생성 로직
+    public Boolean saveDailyCheckListTest(
+            PatientDailyCheckListDTOBundle patientDailyCheckListDTOBundle,
+            LocalDate date,
+            String code
+    ){
+        Patient patient = patientRepositoryBundle.getPatientRepository().findByCode(code)
+                .orElseThrow(() -> new NotFoundException("환자 정보를 찾을 수 없습니다. 환자 코드 : " + code));
+        String patientCode = patient.getCode();
+
+//        // 오늘 날짜 이미 체크리스트 입력한 경우 더 이상 입력하지 못함.
+//        if(isChecklistCreatedToday(LocalDate.now(), patientCode)){
+//            return false;
+//        }
+
+        DailyCheckList dailyCheckList = new DailyCheckList();
+        String dailyCheckListCode = getUUID();
+        dailyCheckList.setCode(dailyCheckListCode);
+        dailyCheckList.setPatientCode(patientCode);
+        dailyCheckList.setCreatedAt(date);
+
+        VitalSigns vitalSigns = new VitalSigns();
+        vitalSigns.setCheckListCode(dailyCheckListCode);
+        vitalSigns.setTemperature(patientDailyCheckListDTOBundle.getVitalSignsDTO().getTemperature());
+        vitalSigns.setBloodPressureSys(patientDailyCheckListDTOBundle.getVitalSignsDTO().getBloodPressureSys());
+        vitalSigns.setBloodPressureDia(patientDailyCheckListDTOBundle.getVitalSignsDTO().getBloodPressureDia());
+        vitalSigns.setPulse(patientDailyCheckListDTOBundle.getVitalSignsDTO().getPulse());
+        vitalSigns.setOxygen(patientDailyCheckListDTOBundle.getVitalSignsDTO().getOxygen());
+        vitalSigns.setRespirationRate(patientDailyCheckListDTOBundle.getVitalSignsDTO().getRespirationRate());
+
+        Consciousness consciousness = new Consciousness();
+        consciousness.setCheckListCode(dailyCheckListCode);
+        consciousness.setConsciousnessLevel(patientDailyCheckListDTOBundle.getConsciousnessDTO().getConsciousnessLevel());
+        consciousness.setMoodBehaviour(patientDailyCheckListDTOBundle.getConsciousnessDTO().getMoodBehaviour());
+
+        PhysicalStatus physicalStatus = new PhysicalStatus();
+        physicalStatus.setCheckListCode(dailyCheckListCode);
+        physicalStatus.setSkinCondition(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getSkinCondition());
+        physicalStatus.setPainLevel(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getPainLevel());
+        physicalStatus.setMobility(patientDailyCheckListDTOBundle.getPhysicalStatusDTO().getMobility());
+
+        Medications medications = new Medications();
+        medications.setCheckListCode(dailyCheckListCode);
+        medications.setMedicationTaken(patientDailyCheckListDTOBundle.getMedicationsDTO().getMedicationTaken());
+        medications.setSideEffects(patientDailyCheckListDTOBundle.getMedicationsDTO().getSideEffects());
+
+        SpecialNotes specialNotes = new SpecialNotes();
+        specialNotes.setCheckListCode(dailyCheckListCode);
+        specialNotes.setSpecialNotes(patientDailyCheckListDTOBundle.getSpecialNotesDTO().getSpecialNotes());
+
+        patientRepositoryBundle.getDailyCheckListRepository().save(dailyCheckList);
+        patientRepositoryBundle.getVitalSignsRepository().save(vitalSigns);
+        patientRepositoryBundle.getConsciousnessRepository().save(consciousness);
+        patientRepositoryBundle.getPhysicalStatusRepository().save(physicalStatus);
+        patientRepositoryBundle.getMedicationsRepository().save(medications);
+        patientRepositoryBundle.getSpecialNotesRepository().save(specialNotes);
+
+        return true;
+    }
+
     public VitalSignsDTO getVitalSignsDTO(String code){
         VitalSignsDTO vitalSignsDTO = new VitalSignsDTO();
 
